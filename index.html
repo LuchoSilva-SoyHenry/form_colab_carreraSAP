@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación de Colaboración | HENRY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --henry-yellow: #FFFF01;
+            --henry-black: #000000;
+            --henry-purple: #8B44F7;
+            --henry-gray: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+        }
+
+        .header-logo {
+            text-align: right;
+            margin-bottom: 2rem;
+            padding: 20px;
+        }
+
+        .henry-logo {
+            width: 150px;
+            height: auto;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .tag-container {
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background-color: white;
+            border: 2px solid var(--henry-black);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .welcome-text {
+            margin: 2rem 0;
+        }
+
+        .highlight {
+            display: inline-block;
+            background-color: var(--henry-yellow);
+            padding: 4px 12px;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        .instructions {
+            background-color: var(--henry-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .instruction-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+        }
+
+        .instructions li {
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .instructions li::before {
+            content: "→";
+            margin-right: 8px;
+            color: var(--henry-purple);
+        }
+
+        .select-container {
+            margin-bottom: 2rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--henry-black);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23000000' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 12px) center;
+            padding-right: 32px;
+        }
+
+        select:hover {
+            border-color: var(--henry-purple);
+        }
+
+        .grid-header {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+            text-align: center;
+            background-color: var(--henry-yellow);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 2rem;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .star-rating {
+            direction: rtl;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            margin: 0 2px;
+            font-size: 30px;
+            color: #ddd;
+            float: right;
+            transition: color 0.2s ease;
+        }
+
+        .star-rating label:before {
+            content: '★';
+        }
+
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: var(--henry-yellow);
+            text-shadow: 0 0 2px var(--henry-black);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--henry-black);
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--henry-purple);
+        }
+
+        .submit-btn {
+            background-color: var(--henry-yellow);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 0 var(--henry-black);
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--henry-black);
+        }
+
+        .submit-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--henry-black);
+        }
+    </style>
+</head>
+<body>
+    <div class="header-logo">
+        <img 
+            src="https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png" 
+            alt="HENRY Logo" 
+            class="henry-logo"
+        >
+    </div>
+
+    <div class="form-container">
+        <h1>Evaluación de Colaboración</h1>
+        <div class="tag-container">
+            <span class="tag">&lt;CARRERA/&gt;</span>
+        </div>
+
+        <div class="welcome-text">
+            <p class="highlight">¡Hola!</p>
+            <p>Queremos conocer tu experiencia colaborativa durante la carrera intensiva de Consultoría SAP.</p>
+        </div>
+
+        <div class="instructions">
+            <p class="instruction-title">Guías rápidas:</p>
+            <ul>
+                <li>Elige a tus compañeros más colaborativos</li>
+                <li>Mínimo 1 persona, máximo 5 personas</li>
+                <li>No te puedes elegir a ti mismo</li>
+            </ul>
+        </div>
+        
+        <form id="collaborationForm">
+            <div class="select-container">
+                <label for="studentName">¿Quién eres tú?</label>
+                <select id="studentName" name="studentName" required>
+                    <option value="">Selecciona tu nombre</option>
+                </select>
+            </div>
+
+            <div class="grid-header">
+                <div>Compañeros destacados</div>
+                <div>Valoración ⭐</div>
+                <div>Tu feedback</div>
+            </div>
+
+            <div class="form-grid" id="top5Selections">
+                <!-- Los elementos se generarán dinámicamente -->
+            </div>
+
+            <button type="submit" class="submit-btn">Enviar Evaluación</button>
+        </form>
+    </div>
+
+    <script>
+        const estudiantes = [
+            'Alejandro Ben',
+            'Favio Sequeira',
+            'Jaime Medina',
+            'Lorena Andrea Caputa',
+            'Daniel Rosado',
+            'Abigail Elizabeth De la Cruz',
+            'Diego Gabadian',
+            'Agustina Lopez Uchima',
+            'Martin López Scala',
+            'Carolina Genga',
+            'Julieta Malacalza',
+            'Bruno Mangione',
+            'Brenda Elena Schutt',
+            'Romina Molina',
+            'Nicolas Córdoba',
+            'Manuela Lafalce',
+            'Cristian Nicolas Risi',
+            'Geraldine Campos Arteaga',
+            'Victoria Lescano Basualdo',
+            'Maria Yanina Borello',
+            'Ignacio Ricci',
+            'Santiago Moya',
+            'Carlos Galdamez'
+        ].sort();
+
+        let selectedStudents = new Set();
+
+        function createStarRating(number) {
+            return `
+                <div class="star-rating">
+                    <input type="radio" id="star5_${number}" name="rating${number}" value="5">
+                    <label for="star5_${number}"></label>
+                    <input type="radio" id="star4_${number}" name="rating${number}" value="4">
+                    <label for="star4_${number}"></label>
+                    <input type="radio" id="star3_${number}" name="rating${number}" value="3">
+                    <label for="star3_${number}"></label>
+                    <input type="radio" id="star2_${number}" name="rating${number}" value="2">
+                    <label for="star2_${number}"></label>
+                    <input type="radio" id="star1_${number}" name="rating${number}" value="1">
+                    <label for="star1_${number}"></label>
+                </div>
+            `;
+        }
+
+        function initializeForm() {
+            const studentSelect = document.getElementById('studentName');
+            const top5Container = document.getElementById('top5Selections');
+
+            estudiantes.forEach(estudiante => {
+                const option = new Option(estudiante, estudiante);
+                studentSelect.add(option);
+            });
+
+            for (let i = 1; i <= 5; i++) {
+                const div = document.createElement('div');
+                div.className = 'form-grid-row';
+                div.style.display = 'contents';
+                div.innerHTML = `
+                    <div class="column">
+                        <select id="top${i}" name="top${i}">
+                            <option value="">Selecciona compañero ${i}</option>
+                        </select>
+                    </div>
+                    <div class="column">
+                        ${createStarRating(i)}
+                    </div>
+                    <div class="column">
+                        <textarea name="comment${i}" placeholder="Escribe tu feedback aquí (opcional)" rows="2"></textarea>
+                    </div>
+                `;
+                top5Container.appendChild(div);
+            }
+
+            studentSelect.addEventListener('change', updateAvailableOptions);
+            document.querySelectorAll('#top5Selections select').forEach(select => {
+                select.addEventListener('change', updateAvailableOptions);
+            });
+        }
+
+        function updateAvailableOptions() {
+            selectedStudents.clear();
+            const mainStudent = document.getElementById('studentName').value;
+            if (mainStudent) selectedStudents.add(mainStudent);
+
+            const currentSelections = {};
+            document.querySelectorAll('#top5Selections select').forEach(select => {
+                if (select.value) {
+                    currentSelections[select.id] = select.value;
+                    selectedStudents.add(select.value);
+                }
+            });
+
+            document.querySelectorAll('#top5Selections select').forEach(select => {
+                const currentValue = currentSelections[select.id];
+                select.innerHTML = '<option value="">Selecciona un compañero</option>';
+                
+                estudiantes.forEach(estudiante => {
+                    if (!selectedStudents.has(estudiante) || estudiante === currentValue) {
+                        const option = new Option(estudiante, estudiante);
+                        if (estudiante === currentValue) {
+                            option.selected = true;
+                        }
+                        select.add(option);
+                    }
+                });
+            });
+        }
+
+        document.getElementById('collaborationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const evaluador = document.getElementById('studentName').value;
+            const evaluaciones = [];
+            
+            // Recopilar todas las evaluaciones válidas
+            for (let i = 1; i <= 5; i++) {
+                const companero = document.querySelector(`#top${i}`).value;
+                const rating = document.querySelector(`input[name="rating${i}"]:checked`);
+                const comentario = document.querySelector(`textarea[name="comment${i}"]`).value;
+                
+                if (companero && rating) {
+                    evaluaciones.push({
+                        companero: companero,
+                        rating: rating.value,
+                        comentario: comentario
+                    });
+                }
+            }
+
+            if (evaluaciones.length > 0) {
+                try {
+                    const response = await fetch('https://script.google.com/macros/s/AKfycbxxnjSWvL8oSO0lDuIYsjl1osOMEezlirI-Lr_Hr4TpGr1Rvia2dq0OINFVTh6IhxZWAg/exec', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            evaluador: evaluador,
+                            evaluaciones: evaluaciones
+                        })
+                    });
+
+                    if (response.ok) {
+                        alert('¡Gracias por tu evaluación!');
+                        document.getElementById('collaborationForm').reset();
+                        // Actualizar las opciones disponibles después de resetear
+                        updateAvailableOptions();
+                    } else {
+                        throw new Error('Error al enviar los datos');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Hubo un error al enviar tu evaluación. Por favor, intenta nuevamente.');
+                }
+            } else {
+                alert('Por favor, completa al menos una evaluación (nombre y valoración)');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', initializeForm);
+    </script>
+</body>
+</html>
